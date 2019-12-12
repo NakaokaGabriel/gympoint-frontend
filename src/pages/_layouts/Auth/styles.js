@@ -29,37 +29,44 @@ export const Content = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-top: 30px;
-  }
 
-  span {
-    display: block;
-    margin: 8px 0;
-    color: #444444;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 16px;
-  }
+    .label {
+      display: block;
+      margin: 8px 0;
+      color: #444444;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 16px;
+    }
 
-  input {
-    width: 100%;
-    padding: 13px 0 13px 15px;
-    border: 1px solid #dddddd;
-    border-radius: 4px;
-    font-size: 16px;
-  }
+    input {
+      width: 100%;
+      padding: 13px 0 13px 15px;
+      border: 1px solid #dddddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
 
-  button {
-    background: #ee4d64;
-    border: none;
-    margin-top: 15px;
-    flex: 1;
-    padding: 13px 0;
-    color: #fff;
-    font-weight: bold;
-    transition: background 0.3s;
+    span {
+      display: block;
+      color: #ee4d64;
+      font-weight: bold;
+      margin-top: 10px;
+    }
 
-    &:hover {
-      background: ${darken(0.03, '#ee4d64')};
+    button {
+      background: #ee4d64;
+      border: none;
+      margin-top: 15px;
+      flex: 1;
+      padding: 13px 0;
+      color: #fff;
+      font-weight: bold;
+      transition: background 0.3s;
+
+      &:hover {
+        background: ${darken(0.03, '#ee4d64')};
+      }
     }
   }
 `;

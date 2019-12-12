@@ -1,10 +1,10 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import Route from './route';
 
-import SignIn from '../pages/SignIn';
+import SignIn from '~/pages/SignIn';
 
-import Student from '../pages/Student';
-import StudentForm from '../pages/Register';
+import Student from '~/pages/Student';
 
 export default function Routes() {
   return (
@@ -12,7 +12,6 @@ export default function Routes() {
       <Route exact path="/" component={SignIn} />
 
       <Route path="/student" component={Student} isPrivate />
-      <Route path="/student/register" component={StudentForm} isPrivate />
     </Switch>
   );
 }

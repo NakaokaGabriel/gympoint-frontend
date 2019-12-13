@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import './config/ReactotronConfig';
 
 import Routes from './Routes';
-import history from './api/history';
+import history from './services/history';
 
 import store from './store';
 

@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
+
+import api from '~/services/api';
 
 import { Header, Form, Table } from './styles';
 
 import Content from '~/components/Content';
 
 export default function Student() {
+  const [students, setStudents] = useState([]);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    async function loadStudents() {
+      const response = await api.get(`students?name=${search}`);
+
+      setStudents(response.data);
+    }
+
+    loadStudents();
+  }, [search]);
+
+  function handleKey(event) {
+    setSearch(event.target.value);
+  }
+
   return (
     <>
       <Header>
@@ -17,7 +36,7 @@ export default function Student() {
           </button>
           <Form>
             <MdSearch size={16} color="#EE4D64" />
-            <input type="text" placeholder="Buscar aluno" />
+            <input type="text" onKeyUp={handleKey} placeholder="Buscar aluno" />
           </Form>
         </aside>
       </Header>
@@ -32,19 +51,21 @@ export default function Student() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Cha Ji-Hun</td>
-              <td>example@rocketseat.com.br</td>
-              <td>
-                <p>20</p>
-              </td>
-              <td>
-                <div>
-                  <button type="button">editar</button>
-                  <button type="button">apagar</button>
-                </div>
-              </td>
-            </tr>
+            {students.map(student => (
+              <tr key={student.id}>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>
+                  <p>{student.age}</p>
+                </td>
+                <td>
+                  <div>
+                    <button type="button">editar</button>
+                    <button type="button">apagar</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Content>

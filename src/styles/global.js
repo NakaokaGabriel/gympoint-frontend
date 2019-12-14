@@ -20,6 +20,7 @@ export default createGlobalStyle`
 
   body {
     -webkit-font-smoothing: antialiased;
+    color: #444;
   }
 
   body, input, button {

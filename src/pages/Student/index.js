@@ -45,45 +45,6 @@ export default function Student() {
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>Cha Ji-Hun</td>
-              <td>example@rocketseat.com.br</td>
-              <td>
-                <p>20</p>
-              </td>
-              <td>
-                <div>
-                  <button type="button">editar</button>
-                  <button type="button">apagar</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Cha Ji-Hun</td>
-              <td>example@rocketseat.com.br</td>
-              <td>
-                <p>20</p>
-              </td>
-              <td>
-                <div>
-                  <button type="button">editar</button>
-                  <button type="button">apagar</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Cha Ji-Hun</td>
-              <td>example@rocketseat.com.br</td>
-              <td>
-                <p>20</p>
-              </td>
-              <td>
-                <div>
-                  <button type="button">editar</button>
-                  <button type="button">apagar</button>
-                </div>
-              </td>
-            </tr>
           </tbody>
         </Table>
       </Content>

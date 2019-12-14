@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
+export const Wrapper = styled.div`
+  background: #f2f2f2;
+  height: 100%;
+`;
 
-export const Content = styled.div``;
+export const Content = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 4px;
+  padding: 30px;
+`;

@@ -8,7 +8,4 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  background: #fff;
-  border-radius: 4px;
-  padding: 30px;
 `;

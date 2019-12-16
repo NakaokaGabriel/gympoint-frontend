@@ -1,13 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Container, Navbar, Profile } from './styles';
 
 import logo from '~/assets/logo.svg';
 
+import { signOut } from '~/store/modules/auth/actions';
+
 export default function Header() {
   const profile = useSelector(state => state.user.profile);
+
+  const dispatch = useDispatch();
+
+  function handleLogout() {
+    dispatch(signOut());
+  }
 
   return (
     <Container>
@@ -32,7 +40,9 @@ export default function Header() {
       </Navbar>
       <Profile>
         <strong>{profile.name}</strong>
-        <button type="button">sair do sistema</button>
+        <button type="button" onClick={handleLogout}>
+          sair do sistema
+        </button>
       </Profile>
     </Container>
   );

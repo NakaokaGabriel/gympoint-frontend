@@ -25,6 +25,14 @@ export default function Student() {
     setSearch(event.target.value);
   }
 
+  async function handleDelete(id) {
+    const idUser = Number(id);
+
+    await api.delete(`students/${idUser}`, {
+      params: idUser,
+    });
+  }
+
   return (
     <>
       <Header>

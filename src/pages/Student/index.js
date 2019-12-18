@@ -61,7 +61,12 @@ export default function Student() {
                 <td>
                   <div>
                     <button type="button">editar</button>
-                    <button type="button">apagar</button>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(student.id)}
+                    >
+                      apagar
+                    </button>
                   </div>
                 </td>
               </tr>

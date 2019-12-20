@@ -26,7 +26,7 @@ export default function Student() {
   }
 
   async function handleDelete(id) {
-    await api.delete(`students/${id}`);
+    await api.delete(`/students/${id}`);
   }
 
   return (
@@ -70,7 +70,6 @@ export default function Student() {
                       onClick={() => handleDelete(student.id)}
                     >
                       apagar
-                      {student.id}
                     </button>
                   </div>
                 </td>

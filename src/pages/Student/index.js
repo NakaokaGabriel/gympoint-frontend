@@ -26,7 +26,7 @@ export default function Student() {
   }
 
   async function handleDelete(id) {
-    await api.delete(`/students/${id}`);
+    await api.delete(`students/${id}`);
   }
 
   return (

@@ -26,6 +26,11 @@ export default function Student() {
   }
 
   async function handleDelete(id) {
+    const idStudent = students.filter(student => {
+      return student.id !== id;
+    });
+    setStudents(idStudent);
+
     await api.delete(`students/${id}`);
   }
 
@@ -69,7 +74,7 @@ export default function Student() {
                       type="button"
                       onClick={() => handleDelete(student.id)}
                     >
-                      apagar
+                      {deleteConfirm ? 'Confirmar' : 'apagar'}
                     </button>
                   </div>
                 </td>

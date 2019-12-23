@@ -74,7 +74,7 @@ export default function Student() {
                       type="button"
                       onClick={() => handleDelete(student.id)}
                     >
-                      {deleteConfirm ? 'Confirmar' : 'apagar'}
+                      apagar
                     </button>
                   </div>
                 </td>

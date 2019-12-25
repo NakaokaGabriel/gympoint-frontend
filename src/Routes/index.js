@@ -5,6 +5,7 @@ import Route from './route';
 import SignIn from '~/pages/SignIn';
 
 import Student from '~/pages/Student';
+import StudentEdit from '~/pages/Student/StudentEdit';
 
 export default function Routes() {
   return (
@@ -12,6 +13,7 @@ export default function Routes() {
       <Route exact path="/" component={SignIn} />
 
       <Route path="/student" component={Student} isPrivate />
+      <Route path="./student/:id" component={StudentEdit} isPrivate />
     </Switch>
   );
 }

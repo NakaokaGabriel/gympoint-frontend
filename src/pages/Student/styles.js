@@ -89,7 +89,8 @@ export const Table = styled.table`
       > div {
         text-align: right;
 
-        button {
+        button,
+        a {
           border: none;
           background: transparent;
           color: #4d85ee;

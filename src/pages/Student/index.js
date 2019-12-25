@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 
 import api from '~/services/api';
@@ -29,10 +30,13 @@ export default function Student() {
     const idStudent = students.filter(student => {
       return student.id !== id;
     });
+
     setStudents(idStudent);
 
     await api.delete(`students/${id}`);
   }
+
+  const { url } = useRouteMatch();
 
   return (
     <>
@@ -69,7 +73,7 @@ export default function Student() {
                 </td>
                 <td>
                   <div>
-                    <button type="button">editar</button>
+                    <Link to={`${url}/${student.id}`}>editar</Link>
                     <button
                       type="button"
                       onClick={() => handleDelete(student.id)}

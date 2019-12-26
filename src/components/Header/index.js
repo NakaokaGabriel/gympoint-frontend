@@ -25,7 +25,7 @@ export default function Header() {
 
         <ul>
           <li>
-            <Link to="/student">ALUNOS</Link>
+            <Link to="/students">ALUNOS</Link>
           </li>
           <li>
             <Link to="/student">PLANOS</Link>

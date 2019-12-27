@@ -13,7 +13,8 @@ export default function Routes() {
       <Route exact path="/" component={SignIn} />
 
       <Route path="/students" component={Student} isPrivate />
-      <Route path="/student/:id" component={StudentEdit} isPrivate />
+      <Route path="/student/profile/:id" component={StudentEdit} isPrivate />
+      <Route path="/student/register" component={Student} isPrivate />
     </Switch>
   );
 }

@@ -7,9 +7,21 @@ import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
 
 export default function StudentEdit() {
+  const initialData = {
+    name: 'Diego Fernandes',
+    email: 'gabriel@hotmail.com',
+    age: 20,
+    weight: '100.9kg',
+    height: '1.88m',
+  };
+
+  async function handleSubmit(data) {
+    console.log(data);
+  }
+
   return (
     <>
-      <Form>
+      <Form onSubmit={handleSubmit} initialData={initialData}>
         <Header>
           <h1>Edição de aluno</h1>
           <aside>
@@ -27,34 +39,24 @@ export default function StudentEdit() {
           <Edit>
             <label htmlFor="name">
               <span>NOME COMPLETO</span>
-              <Input
-                placeholder="Diego fernandes"
-                name="name"
-                id="name"
-                value="diego"
-              />
+              <Input placeholder="Diego fernandes" name="name" id="name" />
             </label>
             <label htmlFor="email">
               <span>ENDEREÇO DE E-MAIL</span>
-              <Input
-                placeholder="teste@hotmail.com"
-                name="email"
-                id="email"
-                value="teste@hotmail.com"
-              />
+              <Input placeholder="teste@hotmail.com" name="email" id="email" />
             </label>
             <Info>
               <label htmlFor="age">
                 <span>IDADE</span>
-                <Input name="age" id="age" value="20" />
+                <Input name="age" id="age" />
               </label>
               <label htmlFor="weight">
                 <span>PESO (em kg)</span>
-                <Input name="weight" id="weight" value="84.4kg" />
+                <Input name="weight" id="weight" />
               </label>
               <label htmlFor="height">
                 <span>ALTURA</span>
-                <Input name="height" id="height" value="1.88m" />
+                <Input name="height" id="height" />
               </label>
             </Info>
           </Edit>

@@ -6,6 +6,7 @@ import SignIn from '~/pages/SignIn';
 
 import Student from '~/pages/Student';
 import StudentEdit from '~/pages/Student/StudentEdit';
+import StudentRegister from '~/pages/Student/StudentRegister';
 
 export default function Routes() {
   return (
@@ -14,7 +15,7 @@ export default function Routes() {
 
       <Route path="/students" component={Student} isPrivate />
       <Route path="/student/profile/:id" component={StudentEdit} isPrivate />
-      <Route path="/student/register" component={Student} isPrivate />
+      <Route path="/student/register" component={StudentRegister} isPrivate />
     </Switch>
   );
 }

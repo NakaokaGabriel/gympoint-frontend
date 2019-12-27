@@ -15,7 +15,7 @@ export const Header = styled.div`
     display: flex;
     align-items: center;
 
-    button {
+    a {
       border: none;
       background: #ee4d64;
       padding: 8px 15px;

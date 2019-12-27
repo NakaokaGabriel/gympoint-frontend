@@ -41,10 +41,10 @@ export default function Student() {
       <Header>
         <h1>Gerenciando alunos</h1>
         <aside>
-          <button type="button">
+          <Link to="/student/register">
             <MdAdd color="#fff" size={20} />
             CADASTRAR
-          </button>
+          </Link>
           <Form>
             <MdSearch size={16} color="#EE4D64" />
             <input type="text" onKeyUp={handleKey} placeholder="Buscar aluno" />

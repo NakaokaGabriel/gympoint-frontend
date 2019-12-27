@@ -71,7 +71,7 @@ export default function Student() {
                 </td>
                 <td>
                   <div>
-                    <Link to={`student/${student.id}`}>editar</Link>
+                    <Link to={`student/profile/${student.id}`}>editar</Link>
                     <button
                       type="button"
                       onClick={() => handleDelete(student.id)}

@@ -59,3 +59,42 @@ export const Header = styled.div`
     }
   }
 `;
+
+export const Edit = styled.div`
+  width: 100%;
+
+  > label {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  span {
+    display: block;
+    color: #444;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  input {
+    margin-bottom: 8px;
+    width: 100%;
+    padding: 13px 10px 13px 15px;
+    color: #666;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+`;
+
+export const Info = styled.div`
+  display: flex;
+
+  > label {
+    flex: 1;
+
+    & + label {
+      margin-left: 15px;
+    }
+  }
+`;

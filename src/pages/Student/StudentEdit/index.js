@@ -1,19 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+
 import { Form, Input } from '@rocketseat/unform';
 import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
+
+import api from '~/services/api';
 
 import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
 
 export default function StudentEdit() {
-  const initialData = {
-    name: 'Diego Fernandes',
-    email: 'gabriel@hotmail.com',
-    age: 20,
-    weight: '100.9kg',
-    height: '1.88m',
-  };
+  const [student, setStudent] = useState({});
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    async function loadStudent() {
+      const response = await api.get(`students/${id}`);
+
+      const { name, email, age, weight, height } = response.data;
+
+      setStudent({
+        name,
+        email,
+        age,
+        weight: `${weight}kg`,
+        height,
+      });
+    }
+
+    loadStudent();
+  }, [id]);
 
   async function handleSubmit(data) {
     console.log(data);
@@ -21,7 +38,7 @@ export default function StudentEdit() {
 
   return (
     <>
-      <Form onSubmit={handleSubmit} initialData={initialData}>
+      <Form onSubmit={handleSubmit} initialData={student}>
         <Header>
           <h1>Edição de aluno</h1>
           <aside>

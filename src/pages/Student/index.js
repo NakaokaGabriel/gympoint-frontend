@@ -27,13 +27,19 @@ export default function Student() {
   }
 
   async function handleDelete(id) {
-    const idStudent = students.filter(student => {
-      return student.id !== id;
-    });
+    const confirm = window.confirm('Quer apagar ?');
 
-    setStudents(idStudent);
+    if (confirm) {
+      await api.delete(`students/${id}`);
 
-    await api.delete(`students/${id}`);
+      const idStudent = students.filter(student => {
+        return student.id !== id;
+      });
+
+      setStudents(idStudent);
+    } else {
+      console.tron.log('cu');
+    }
   }
 
   return (

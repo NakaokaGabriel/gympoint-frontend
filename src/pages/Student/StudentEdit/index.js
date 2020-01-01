@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { useParams, Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
 
 import api from '~/services/api';
 
+import { studentUpdateRequest } from '~/store/modules/student/actions';
+
 import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
 
 export default function StudentEdit() {
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.student.loading);
   const [student, setStudent] = useState({});
 
   const { id } = useParams();
@@ -32,8 +37,8 @@ export default function StudentEdit() {
     loadStudent();
   }, [id]);
 
-  async function handleSubmit(data) {
-    console.log(data);
+  async function handleSubmit(data, { studentId = id }) {
+    dispatch(studentUpdateRequest(data, studentId));
   }
 
   return (
@@ -48,7 +53,7 @@ export default function StudentEdit() {
             </Link>
             <button type="submit">
               <MdCheck color="#fff" size={20} />
-              SALVAR
+              {loading ? 'CARREGANDO' : 'SALVAR'}
             </button>
           </aside>
         </Header>

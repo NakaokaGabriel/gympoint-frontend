@@ -13,6 +13,22 @@ export function studentRegisterSuccess() {
   };
 }
 
+export function studentUpdateRequest(data, studentId) {
+  return {
+    type: '@student/UPDATE_REQUEST',
+    payload: {
+      data,
+      studentId,
+    },
+  };
+}
+
+export function studentUpdateSuccess(profile) {
+  return {
+    type: '@student/UPDATE_SUCCESS',
+  };
+}
+
 export function studentFailure() {
   return {
     type: '@student/FAILURE',

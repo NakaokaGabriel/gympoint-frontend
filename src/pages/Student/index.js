@@ -14,9 +14,15 @@ export default function Student() {
 
   useEffect(() => {
     async function loadStudents() {
-      const response = await api.get(`students?name=${search}`);
+      let response = null;
 
-      setStudents(response.data);
+      try {
+        response = await api.get(`students?name=${search}`);
+
+        setStudents(response.data);
+      } catch (err) {
+        console.tron.log('errou');
+      }
     }
 
     loadStudents();
@@ -37,8 +43,6 @@ export default function Student() {
       });
 
       setStudents(idStudent);
-    } else {
-      console.tron.log('cu');
     }
   }
 

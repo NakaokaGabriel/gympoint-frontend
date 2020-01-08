@@ -1,7 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
+import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
+
+import api from '~/services/api';
 
 import { Header } from './styles';
 
@@ -9,12 +11,26 @@ import Content from '~/components/Content';
 import Table from '~/components/Table';
 
 export default function Plans() {
+  const [plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    async function loadPlans() {
+      const response = await api.get('/plans');
+
+      const { data } = response;
+
+      setPlans(data);
+    }
+
+    loadPlans();
+  }, []);
+
   return (
     <>
       <Header>
         <h1>Gerenciando planos</h1>
         <aside>
-          <Link to="/student/register">
+          <Link to="/plan/register">
             <MdAdd color="#fff" size={20} />
             CADASTRAR
           </Link>
@@ -30,6 +46,21 @@ export default function Plans() {
               <th aria-label="buttons" />
             </tr>
           </thead>
+          <tbody>
+            {plans.map(plan => (
+              <tr key={plan.id}>
+                <td>{plan.title}</td>
+                <td>{plan.duration} meses</td>
+                <td>{plan.price}</td>
+                <td>
+                  <div>
+                    <Link to={`plan/edit/${plan.id}`}>editar</Link>
+                    <button type="button">apagar</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
       </Content>
     </>

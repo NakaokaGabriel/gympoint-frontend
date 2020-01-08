@@ -1,23 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-// import { Container } from './styles';
+import { MdAdd } from 'react-icons/md';
 
-import Header from '~/components/Header';
+import { Header } from './styles';
+
+import Content from '~/components/Content';
 
 export default function Plans() {
   return (
     <>
       <Header>
-        <h1>Gerenciando alunos</h1>
+        <h1>Gerenciando planos</h1>
         <aside>
           <Link to="/student/register">
             <MdAdd color="#fff" size={20} />
             CADASTRAR
           </Link>
-          <Form>
-            <MdSearch size={16} color="#EE4D64" />
-            <input type="text" onKeyUp={handleKey} placeholder="Buscar aluno" />
-          </Form>
         </aside>
       </Header>
     </>

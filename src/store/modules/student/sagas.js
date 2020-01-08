@@ -39,7 +39,7 @@ export function* update({ payload }) {
 
     console.tron.log(data);
 
-    yield call(api.put, `students?id=${studentId}`, {
+    yield call(api.put, `students/${studentId}`, {
       ...data,
       age,
       weight,

@@ -4,9 +4,10 @@ import { MdAdd, MdSearch } from 'react-icons/md';
 
 import api from '~/services/api';
 
-import { Header, Form, Table } from './styles';
+import { Header, Form } from './styles';
 
 import Content from '~/components/Content';
+import Table from '~/components/Table';
 
 export default function Student() {
   const [students, setStudents] = useState([]);

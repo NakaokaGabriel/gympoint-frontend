@@ -12,5 +12,6 @@ export default function Table({ children }) {
 }
 
 Table.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+    .isRequired,
 };

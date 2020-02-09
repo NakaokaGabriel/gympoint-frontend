@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 
 import api from '~/services/api';
+import { priceFormatted } from '~/util/priceFormat';
 
 import { Header } from './styles';
 
@@ -17,7 +18,10 @@ export default function Plans() {
     async function loadPlans() {
       const response = await api.get('/plans');
 
-      const { data } = response;
+      const data = response.data.map(plan => ({
+        ...plan,
+        priceFormat: priceFormatted(plan.price),
+      }));
 
       setPlans(data);
     }
@@ -51,7 +55,7 @@ export default function Plans() {
               <tr key={plan.id}>
                 <td>{plan.title}</td>
                 <td>{plan.duration} meses</td>
-                <td>{plan.price}</td>
+                <td>{plan.priceFormat}</td>
                 <td>
                   <div>
                     <Link to={`plan/edit/${plan.id}`}>editar</Link>

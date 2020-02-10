@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
@@ -9,9 +10,15 @@ import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
 
 export default function PlansRegister() {
+  const dispatch = useDispatch();
+
+  function handleSubmit({ title, duration, monthPrice }, { resetForm }) {
+    console.tron.log({ title, duration, monthPrice });
+  }
+
   return (
     <>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Header>
           <h1>Cadastro de plano</h1>
           <aside>
@@ -30,7 +37,7 @@ export default function PlansRegister() {
             <label>
               {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
               <span>TÍTULO DO PLANO</span>
-              <Input name="name" />
+              <Input name="title" />
             </label>
             <Info>
               <label htmlFor="duration">

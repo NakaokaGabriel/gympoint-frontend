@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
-import formatStringByPattern from 'format-string-by-pattern';
 
 import { studentRegisterRequest } from '~/store/modules/student/actions';
 
@@ -19,15 +18,13 @@ const schema = Yup.object().shape({
     .email('E-mail invalido')
     .required('E-mail é obrigatorio'),
   age: Yup.string()
-    .max(2)
+    .max(3, 'Idade deve ser no máximo 3 caracteres')
     .required('Idade é obrigatorio'),
   weight: Yup.string().required('Peso é obrigatorio'),
   height: Yup.string().required('Altura é obrigatorio'),
 });
 
 export default function StudentRegister() {
-  const initial_state = '';
-
   const [updateAge, setUpdateAge] = useState('');
   const [updateWeight, setUpdateWeight] = useState('');
   const [updateHeight, setUpdateHeight] = useState('');
@@ -40,9 +37,9 @@ export default function StudentRegister() {
 
     resetForm();
 
-    setUpdateAge(initial_state);
-    setUpdateWeight(initial_state);
-    setUpdateHeight(initial_state);
+    setUpdateAge('');
+    setUpdateWeight('');
+    setUpdateHeight('');
   }
 
   return (
@@ -80,9 +77,7 @@ export default function StudentRegister() {
                   name="age"
                   id="age"
                   value={updateAge}
-                  onChange={e =>
-                    setUpdateAge(formatStringByPattern('XX', e.target.value))
-                  }
+                  onChange={e => setUpdateAge(e.target.value)}
                 />
               </label>
               <label htmlFor="weight">
@@ -91,11 +86,7 @@ export default function StudentRegister() {
                   name="weight"
                   id="weight"
                   value={updateWeight}
-                  onChange={e =>
-                    setUpdateWeight(
-                      formatStringByPattern('XX.X', e.target.value)
-                    )
-                  }
+                  onChange={e => setUpdateWeight(e.target.value)}
                 />
               </label>
               <label htmlFor="height">
@@ -104,11 +95,7 @@ export default function StudentRegister() {
                   name="height"
                   id="height"
                   value={updateHeight}
-                  onChange={e =>
-                    setUpdateHeight(
-                      formatStringByPattern('X.XX', e.target.value)
-                    )
-                  }
+                  onChange={e => setUpdateHeight(e.target.value)}
                 />
               </label>
             </Info>

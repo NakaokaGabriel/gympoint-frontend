@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
@@ -9,6 +9,22 @@ import Content from '~/components/Content';
 import { Header, Edit, Info } from './styles';
 
 export default function PlansEdit() {
+  const [monthPrice, setMonthPrice] = useState('');
+
+  function mask(value) {
+    let formatValue = value.replace(/\D/g, '');
+
+    formatValue = `R$ ${(formatValue / 100).toFixed(2)}`;
+
+    return formatValue
+      .replace(/(\d)(\d{3})(\d{3})/g, '$1.$2.$3,')
+      .replace(/(\d)(\d{3})/g, '$1.$2,');
+  }
+
+  function handleMask(value) {
+    setMonthPrice(mask(value));
+  }
+
   return (
     <>
       <Form>
@@ -38,7 +54,12 @@ export default function PlansEdit() {
               </label>
               <label htmlFor="currentPrice">
                 <span>PREÇO MENSAL</span>
-                <Input name="currentPrice" id="currentPrice" />
+                <Input
+                  onChange={event => handleMask(event.target.value)}
+                  value={monthPrice}
+                  name="currentPrice"
+                  id="currentPrice"
+                />
               </label>
               <label htmlFor="totalPrice">
                 <span>PREÇO TOTAL</span>

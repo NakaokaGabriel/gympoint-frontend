@@ -15,6 +15,21 @@ export function planRegisterSuccess() {
   };
 }
 
+export function planDeleteRequest(id) {
+  return {
+    type: '@plan/DELETE_PLAN_REQUEST',
+    payload: {
+      id,
+    },
+  };
+}
+
+export function planDeleteSuccess() {
+  return {
+    type: '@plan/DELETE_PLAN_SUCCESS',
+  };
+}
+
 export function planFailure() {
   return {
     type: '@plan/PLAN_FAILURE',

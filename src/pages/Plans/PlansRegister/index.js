@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as Yup from 'yup';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
-
+import { priceMask, durationMask } from '~/util/mask';
 import { planRegisterRequest } from '~/store/modules/plan/actions';
 
 import { Header, Edit, Info } from './styles';
@@ -20,6 +20,9 @@ const schema = Yup.object().shape({
 
 export default function PlansRegister() {
   const dispatch = useDispatch();
+
+  const [duration, setDuration] = useState('');
+  const [monthPrice, setMonthPrice] = useState('');
 
   function handleSubmit({ title, duration, monthPrice }, { resetForm }) {
     dispatch(planRegisterRequest(title, duration, monthPrice));
@@ -53,11 +56,22 @@ export default function PlansRegister() {
             <Info>
               <label htmlFor="duration">
                 <span>DURAÇÃO (em meses)</span>
-                <Input name="duration" id="duration" />
+                <Input
+                  name="duration"
+                  id="duration"
+                  onChange={e => setDuration(durationMask(e.target.value))}
+                  maxLength="2"
+                  value={duration}
+                />
               </label>
               <label htmlFor="monthPrice">
                 <span>PREÇO MENSAL</span>
-                <Input name="monthPrice" id="monthPrice" />
+                <Input
+                  name="monthPrice"
+                  id="monthPrice"
+                  onChange={e => setMonthPrice(priceMask(e.target.value))}
+                  value={monthPrice}
+                />
               </label>
               <label htmlFor="totalPrice">
                 <span>PREÇO TOTAL</span>

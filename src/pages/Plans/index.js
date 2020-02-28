@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 
 import api from '~/services/api';
 import { priceFormatted } from '~/util/priceFormat';
+import { planDeleteRequest } from '~/store/modules/plan/actions';
 
 import { Header } from './styles';
 
@@ -12,7 +14,11 @@ import Content from '~/components/Content';
 import Table from '~/components/Table';
 
 export default function Plans() {
+  const loading = useSelector(state => state.plan.loading);
+
   const [plans, setPlans] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadPlans() {
@@ -27,7 +33,17 @@ export default function Plans() {
     }
 
     loadPlans();
-  }, []);
+  }, [loading]);
+
+  function handleDelete(planId) {
+    dispatch(planDeleteRequest(planId));
+
+    const plan = plans.filter(idPlan => {
+      return idPlan.id !== planId;
+    });
+
+    setPlans(plan);
+  }
 
   return (
     <>
@@ -59,7 +75,9 @@ export default function Plans() {
                 <td>
                   <div>
                     <Link to={`plan/edit/${plan.id}`}>editar</Link>
-                    <button type="button">apagar</button>
+                    <button type="button" onClick={() => handleDelete(plan.id)}>
+                      excluir
+                    </button>
                   </div>
                 </td>
               </tr>

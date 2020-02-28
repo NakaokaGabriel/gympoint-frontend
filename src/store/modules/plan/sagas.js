@@ -1,7 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import api from '~/services/api';
-import { planRegisterSuccess, planFailure } from './actions';
+import { planRegisterSuccess, planDeleteSuccess, planFailure } from './actions';
 
 export function* planRegister({ payload }) {
   try {
@@ -22,4 +22,19 @@ export function* planRegister({ payload }) {
   }
 }
 
-export default all([takeLatest('@plan/ADD_PLAN_REQUEST', planRegister)]);
+export function* planDelete({ payload }) {
+  try {
+    const { id } = payload;
+
+    yield call(api.delete, `plans/${id}`);
+
+    yield put(planDeleteSuccess());
+  } catch (err) {
+    yield put(planFailure());
+  }
+}
+
+export default all([
+  takeLatest('@plan/DELETE_PLAN_REQUEST', planDelete),
+  takeLatest('@plan/ADD_PLAN_REQUEST', planRegister),
+]);

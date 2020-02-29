@@ -31,10 +31,10 @@ export default function Header() {
             <Link to="/plans">PLANOS</Link>
           </li>
           <li>
-            <Link to="/student">MATRÍCULAS</Link>
+            <Link to="/enrollments">MATRÍCULAS</Link>
           </li>
           <li>
-            <Link to="/student">PEDIDOS DE AUXÍLIO</Link>
+            <Link to="/help-orders">PEDIDOS DE AUXÍLIO</Link>
           </li>
         </ul>
       </Navbar>

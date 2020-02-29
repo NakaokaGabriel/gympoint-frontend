@@ -8,7 +8,8 @@ export function* planRegister({ payload }) {
     const { title, duration, monthPrice } = payload;
 
     const formatDuration = Number(duration);
-    const formatPrice = parseFloat(monthPrice);
+    const formatPrice = monthPrice.replace('R$ ', '');
+    parseFloat(formatPrice);
 
     yield call(api.post, 'plans', {
       title,

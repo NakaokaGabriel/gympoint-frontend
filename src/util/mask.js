@@ -15,3 +15,11 @@ export function durationMask(durationValue) {
 
   return formatValue;
 }
+
+export function dateMask(value) {
+  const formatValue = value
+    .replace(/\D/g, '')
+    .replace(/(\d{2})(\d{2})(\d{4})/g, '$1/$2/$3');
+
+  return formatValue;
+}

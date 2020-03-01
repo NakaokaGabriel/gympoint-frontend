@@ -47,7 +47,7 @@ export default function Enrollment() {
       <Header>
         <h1>Gerenciando matrículas</h1>
         <aside>
-          <Link to="/plan/register">
+          <Link to="/enrollment/register">
             <MdAdd color="#fff" size={20} />
             CADASTRAR
           </Link>

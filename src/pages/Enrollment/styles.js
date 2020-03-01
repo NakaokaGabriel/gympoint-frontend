@@ -38,3 +38,11 @@ export const Header = styled.div`
     }
   }
 `;
+
+export const Status = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: ${props => (props.status ? '#4D85EE' : '#EE4D64')};
+  margin-left: 15px;
+`;

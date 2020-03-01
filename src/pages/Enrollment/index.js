@@ -1,13 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { MdAdd } from 'react-icons/md';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
 
-import { Header } from './styles';
+import api from '~/services/api';
+
+import { Header, Status } from './styles';
 import Content from '~/components/Content';
 import Table from '~/components/Table';
 
 export default function Enrollment() {
+  const [enrollments, setEnrollments] = useState([]);
+
+  useEffect(() => {
+    async function loadEnrollment() {
+      const response = await api.get('/enrollments');
+
+      const data = response.data.map(enrollment => ({
+        ...enrollment,
+        startDate: format(
+          parseISO(enrollment.start_date),
+          "dd 'de' MMMM 'de' yyyy",
+          {
+            locale: pt,
+          }
+        ),
+        endDate: format(
+          parseISO(enrollment.end_date),
+          "dd 'de' MMMM 'de' yyyy",
+          {
+            locale: pt,
+          }
+        ),
+      }));
+
+      setEnrollments(data);
+    }
+
+    loadEnrollment();
+  }, []);
+
   return (
     <>
       <Header>
@@ -23,24 +57,28 @@ export default function Enrollment() {
         <Table>
           <thead>
             <tr>
-              <th>TÍTULO</th>
-              <th>DURAÇÃO</th>
-              <th>VALOR p/ MÊS</th>
+              <th>ALUNO</th>
+              <th>PLANO</th>
+              <th>INÍCIO</th>
+              <th>TÉRMINO</th>
+              <th>ATIVA</th>
               <th aria-label="buttons" />
             </tr>
           </thead>
           <tbody>
-            {plans.map(plan => (
-              <tr key={plan.id}>
-                <td>{plan.title}</td>
-                <td>{plan.duration} meses</td>
-                <td>{plan.priceFormat}</td>
+            {enrollments.map(enrollment => (
+              <tr key={enrollment.id}>
+                <td>{enrollment.student.name}</td>
+                <td>{enrollment.plan.title}</td>
+                <td>{enrollment.startDate}</td>
+                <td>{enrollment.endDate}</td>
+                <td>
+                  <Status status={enrollment.active} />
+                </td>
                 <td>
                   <div>
-                    <Link to={`plan/edit/${plan.id}`}>editar</Link>
-                    <button type="button" onClick={() => handleDelete(plan.id)}>
-                      excluir
-                    </button>
+                    <Link to="/enrollments">editar</Link>
+                    <button type="button">excluir</button>
                   </div>
                 </td>
               </tr>

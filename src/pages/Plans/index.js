@@ -70,7 +70,11 @@ export default function Plans() {
             {plans.map(plan => (
               <tr key={plan.id}>
                 <td>{plan.title}</td>
-                <td>{plan.duration} meses</td>
+                <td>
+                  {plan.duration === 1
+                    ? `${plan.duration} mês`
+                    : `${plan.duration} meses`}
+                </td>
                 <td>{plan.priceFormat}</td>
                 <td>
                   <div>

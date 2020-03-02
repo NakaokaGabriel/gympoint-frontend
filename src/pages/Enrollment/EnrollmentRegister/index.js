@@ -12,7 +12,10 @@ import Content from '~/components/Content';
 
 export default function EnrollmentRegister() {
   const [plans, setPlans] = useState([]);
+  const [planValue, setPlanValue] = useState('');
+
   const [students, setStudents] = useState([]);
+
   const [startDate, setStartDate] = useState('');
 
   useEffect(() => {
@@ -44,6 +47,10 @@ export default function EnrollmentRegister() {
 
     loadStudents();
   }, []);
+
+  // const totalPrice = useMemo(() => {
+
+  // }, []);
 
   return (
     <>

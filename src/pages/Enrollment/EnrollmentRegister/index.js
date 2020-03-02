@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
@@ -12,21 +12,37 @@ import Content from '~/components/Content';
 
 export default function EnrollmentRegister() {
   const [plans, setPlans] = useState([]);
+  const [students, setStudents] = useState([]);
   const [startDate, setStartDate] = useState('');
 
   useEffect(() => {
     async function loadPlans() {
       const response = await api.get('/plans');
 
-      const options = response.data.map(plan => ({
-        value: plan.title,
+      const plansOptions = response.data.map(plan => ({
+        value: plan.id,
         label: plan.title,
       }));
 
-      setPlans(options);
+      setPlans(plansOptions);
     }
 
     loadPlans();
+  }, []);
+
+  useEffect(() => {
+    async function loadStudents() {
+      const response = await api.get('/students?name');
+
+      const studentsOptions = response.data.map(student => ({
+        value: student.id,
+        label: student.name,
+      }));
+
+      setStudents(studentsOptions);
+    }
+
+    loadStudents();
   }, []);
 
   return (
@@ -35,7 +51,7 @@ export default function EnrollmentRegister() {
         <Header>
           <h1>Cadastro de matrícula</h1>
           <aside>
-            <Link to="/plans">
+            <Link to="/enrollments">
               <MdKeyboardArrowLeft color="#fff" size={20} />
               VOLTAR
             </Link>
@@ -50,10 +66,10 @@ export default function EnrollmentRegister() {
             <label>
               {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
               <span>ALUNO</span>
-              <Input name="student" />
+              <Select name="student" options={students} />
             </label>
             <Info>
-              <label htmlFor="duration">
+              <label htmlFor="plan">
                 <span>PLANO</span>
                 <Select options={plans} />
               </label>

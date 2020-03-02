@@ -80,7 +80,7 @@ export const Edit = styled.div`
   input {
     margin-bottom: 8px;
     width: 100%;
-    padding: 13px 10px 13px 15px;
+    padding: 10px 10px 10px 15px;
     color: #666;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -89,6 +89,7 @@ export const Edit = styled.div`
 
 export const Info = styled.div`
   display: flex;
+  margin-top: 20px;
 
   > label {
     flex: 1;
@@ -96,5 +97,9 @@ export const Info = styled.div`
     & + label {
       margin-left: 15px;
     }
+  }
+
+  input:read-only {
+    background: #f5f5f5;
   }
 `;

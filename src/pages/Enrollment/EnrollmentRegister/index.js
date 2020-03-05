@@ -4,19 +4,18 @@ import { Link } from 'react-router-dom';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import Select from 'react-select';
+
 import api from '~/services/api';
-import { dateMask } from '~/util/mask';
+import { priceFormatted } from '~/util/priceFormat';
 
 import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
 
 export default function EnrollmentRegister() {
   const [plans, setPlans] = useState([]);
-  const [planValue, setPlanValue] = useState('');
+  const [planValue, setPlanValue] = useState({});
 
   const [students, setStudents] = useState([]);
-
-  const [startDate, setStartDate] = useState('');
 
   useEffect(() => {
     async function loadPlans() {
@@ -25,6 +24,8 @@ export default function EnrollmentRegister() {
       const plansOptions = response.data.map(plan => ({
         value: plan.id,
         label: plan.title,
+        price: plan.price,
+        duration: plan.duration,
       }));
 
       setPlans(plansOptions);
@@ -48,9 +49,16 @@ export default function EnrollmentRegister() {
     loadStudents();
   }, []);
 
-  // const totalPrice = useMemo(() => {
+  const handleChange = e => {
+    setPlanValue(e);
+  };
 
-  // }, []);
+  const finalPrice = useMemo(() => {
+    const isMoney = parseFloat(planValue.price);
+    const isMonth = Number(planValue.duration);
+
+    return priceFormatted(isMoney * isMonth || '0');
+  }, [planValue]);
 
   return (
     <>
@@ -73,22 +81,25 @@ export default function EnrollmentRegister() {
             <label>
               {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
               <span>ALUNO</span>
-              <Select name="student" options={students} />
+              <Select
+                name="student"
+                options={students}
+                defaultValue={{ label: 'Escolha um aluno' }}
+              />
             </label>
             <Info>
               <label htmlFor="plan">
                 <span>PLANO</span>
-                <Select options={plans} />
+                <Select
+                  options={plans}
+                  defaultValue={{ label: 'Escolha um plano' }}
+                  onChange={handleChange}
+                  name="plans"
+                />
               </label>
               <label htmlFor="startDate">
                 <span>DATA DE INÍCIO</span>
-                <Input
-                  name="startDate"
-                  id="startDate"
-                  onChange={e => setStartDate(e.target.value)}
-                  value={dateMask(startDate)}
-                  maxLength="10"
-                />
+                <Input name="startDate" id="startDate" maxLength="10" />
               </label>
               <label htmlFor="endDate">
                 <span>DATA DE TÉRMINO</span>
@@ -96,7 +107,12 @@ export default function EnrollmentRegister() {
               </label>
               <label htmlFor="endPrice">
                 <span>VALOR FINAL</span>
-                <Input readOnly name="endPrice" id="endPrice" />
+                <Input
+                  readOnly
+                  value={finalPrice}
+                  name="endPrice"
+                  id="endPrice"
+                />
               </label>
             </Info>
           </Edit>

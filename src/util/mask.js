@@ -17,9 +17,9 @@ export function durationMask(durationValue) {
 }
 
 export function dateMask(value) {
-  const formatValue = value
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d{2})(\d{4})/g, '$1/$2/$3');
+  value = value.replace(/\D/g, '');
+  value = value.replace(/(\d{2})(\d)/, '$1/$2');
+  value = value.replace(/(\d{2})(\d)/, '$1/$2');
 
-  return formatValue;
+  return value;
 }

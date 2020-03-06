@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import Select from 'react-select';
+import { parse, addMonths, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import api from '~/services/api';
 import { priceFormatted } from '~/util/priceFormat';
+import { dateMask } from '~/util/mask';
 
 import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
@@ -16,6 +19,9 @@ export default function EnrollmentRegister() {
   const [planValue, setPlanValue] = useState({});
 
   const [students, setStudents] = useState([]);
+
+  const [startDate, setStartDate] = useState('');
+  const [startDateFormat, setStartDateFormat] = useState();
 
   useEffect(() => {
     async function loadPlans() {
@@ -60,6 +66,19 @@ export default function EnrollmentRegister() {
     return priceFormatted(isMoney * isMonth || '0');
   }, [planValue]);
 
+  useEffect(() => {
+    const [day, month, year] = startDate.split('/');
+
+    setStartDateFormat(new Date(year, month, day));
+  }, [startDate]);
+
+  const finalDate = useMemo(() => {
+    const duration = planValue.duration - 1;
+    const formatStarDate = addMonths(startDateFormat, duration);
+
+    return formatStarDate;
+  }, [planValue.duration, startDateFormat]);
+
   return (
     <>
       <Form>
@@ -99,11 +118,17 @@ export default function EnrollmentRegister() {
               </label>
               <label htmlFor="startDate">
                 <span>DATA DE INÍCIO</span>
-                <Input name="startDate" id="startDate" maxLength="10" />
+                <Input
+                  name="startDate"
+                  onChange={e => setStartDate(dateMask(e.target.value))}
+                  id="startDate"
+                  maxLength="10"
+                  value={startDate}
+                />
               </label>
               <label htmlFor="endDate">
                 <span>DATA DE TÉRMINO</span>
-                <Input readOnly name="endDate" id="endDate" />
+                <Input readOnly value={finalDate} name="endDate" id="endDate" />
               </label>
               <label htmlFor="endPrice">
                 <span>VALOR FINAL</span>

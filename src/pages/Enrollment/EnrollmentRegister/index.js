@@ -23,7 +23,7 @@ export default function EnrollmentRegister() {
 
       const plansOptions = response.data.map(plan => ({
         value: plan.id,
-        label: plan.title,
+        label: `${plan.title} | meses: ${plan.duration}`,
         price: plan.price,
         duration: plan.duration,
       }));

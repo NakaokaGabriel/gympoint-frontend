@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import Select from 'react-select';
-import { parse, addMonths, format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 
 import api from '~/services/api';
 import { priceFormatted } from '~/util/priceFormat';
@@ -15,13 +13,27 @@ import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
 
 export default function EnrollmentRegister() {
+  const [students, setStudents] = useState({});
+
   const [plans, setPlans] = useState([]);
   const [planValue, setPlanValue] = useState({});
 
-  const [students, setStudents] = useState([]);
-
   const [startDate, setStartDate] = useState('');
-  const [startDateFormat, setStartDateFormat] = useState();
+
+  useEffect(() => {
+    async function loadStudents() {
+      const response = await api.get('/students?name');
+
+      const studentsOptions = response.data.map(student => ({
+        value: student.id,
+        label: student.name,
+      }));
+
+      setStudents(studentsOptions);
+    }
+
+    loadStudents();
+  }, []);
 
   useEffect(() => {
     async function loadPlans() {
@@ -40,21 +52,6 @@ export default function EnrollmentRegister() {
     loadPlans();
   }, []);
 
-  useEffect(() => {
-    async function loadStudents() {
-      const response = await api.get('/students?name');
-
-      const studentsOptions = response.data.map(student => ({
-        value: student.id,
-        label: student.name,
-      }));
-
-      setStudents(studentsOptions);
-    }
-
-    loadStudents();
-  }, []);
-
   const handleChange = e => {
     setPlanValue(e);
   };
@@ -65,19 +62,6 @@ export default function EnrollmentRegister() {
 
     return priceFormatted(isMoney * isMonth || '0');
   }, [planValue]);
-
-  useEffect(() => {
-    const [day, month, year] = startDate.split('/');
-
-    setStartDateFormat(new Date(year, month, day));
-  }, [startDate]);
-
-  const finalDate = useMemo(() => {
-    const duration = planValue.duration - 1;
-    const formatStarDate = addMonths(startDateFormat, duration);
-
-    return formatStarDate;
-  }, [planValue.duration, startDateFormat]);
 
   return (
     <>
@@ -104,6 +88,7 @@ export default function EnrollmentRegister() {
                 name="student"
                 options={students}
                 defaultValue={{ label: 'Escolha um aluno' }}
+                value={students.value}
               />
             </label>
             <Info>
@@ -114,6 +99,7 @@ export default function EnrollmentRegister() {
                   defaultValue={{ label: 'Escolha um plano' }}
                   onChange={handleChange}
                   name="plans"
+                  value={plans.value}
                 />
               </label>
               <label htmlFor="startDate">
@@ -128,7 +114,7 @@ export default function EnrollmentRegister() {
               </label>
               <label htmlFor="endDate">
                 <span>DATA DE TÉRMINO</span>
-                <Input readOnly value={finalDate} name="endDate" id="endDate" />
+                <Input readOnly name="endDate" id="endDate" />
               </label>
               <label htmlFor="endPrice">
                 <span>VALOR FINAL</span>

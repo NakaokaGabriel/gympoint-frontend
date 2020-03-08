@@ -14,6 +14,7 @@ import PlansEdit from '~/pages/Plans/PlansEdit';
 
 import Enrollment from '~/pages/Enrollment';
 import EnrollmentRegister from '~/pages/Enrollment/EnrollmentRegister';
+import EnrollmentEdit from '~/pages/Enrollment/EnrollmentEdit';
 
 import HelpOrders from '~/pages/HelpOrders';
 
@@ -36,6 +37,7 @@ export default function Routes() {
         component={EnrollmentRegister}
         isPrivate
       />
+      <Route path="/enrollment/edit/:id" component={EnrollmentEdit} isPrivate />
 
       <Route path="/help-orders" component={HelpOrders} isPrivate />
     </Switch>

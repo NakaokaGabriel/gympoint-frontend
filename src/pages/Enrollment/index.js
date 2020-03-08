@@ -77,7 +77,7 @@ export default function Enrollment() {
                 </td>
                 <td>
                   <div>
-                    <Link to="/enrollments">editar</Link>
+                    <Link to={`enrollment/edit/${enrollment.id}`}>editar</Link>
                     <button type="button">excluir</button>
                   </div>
                 </td>

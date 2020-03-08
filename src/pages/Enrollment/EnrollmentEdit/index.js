@@ -1,20 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
+import { parseISO, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+import api from '~/services/api';
+import { priceFormatted } from '~/util/priceFormat';
+import { dateMask } from '~/util/mask';
 
 import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
 
 export default function EnrollmentEdit() {
+  const [initialEnrollment, setInitialEnrollment] = useState([]);
+
+  const [startDate, setStartDate] = useState('');
+
   const { id } = useParams();
+
+  useEffect(() => {
+    async function loadGetEnrollment() {
+      const response = await api.get(`enrollments/${id}`);
+
+      const data = {
+        student: response.data.student.name,
+        plan: response.data.plan.title,
+        totalPrice: priceFormatted(response.data.price),
+        startDate: format(
+          parseISO(response.data.start_date),
+          "dd'/'MM'/'yyyy",
+          {
+            locale: pt,
+          }
+        ),
+        endDate: format(parseISO(response.data.end_date), "dd'/'MM'/'yyyy", {
+          locale: pt,
+        }),
+      };
+
+      setInitialEnrollment(data);
+    }
+
+    loadGetEnrollment();
+  }, [id]);
 
   return (
     <>
-      <Form>
+      <Form initialData={initialEnrollment}>
         <Header>
-          <h1>Edição de aluno</h1>
+          <h1>Edição de matricula</h1>
           <aside>
             <Link to="/enrollments">
               <MdKeyboardArrowLeft color="#fff" size={20} />
@@ -31,7 +66,7 @@ export default function EnrollmentEdit() {
             <label htmlFor="aluno">
               {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
               <span>ALUNO</span>
-              <Input placeholder="Nome do aluno" name="aluno" id="aluno" />
+              <Input placeholder="Nome do aluno" name="student" id="student" />
             </label>
             <Info>
               <label htmlFor="plan">
@@ -40,15 +75,19 @@ export default function EnrollmentEdit() {
               </label>
               <label htmlFor="startDate">
                 <span>DATA DE INÍCIO</span>
-                <Input name="startDate" id="startDate" />
+                <Input
+                  name="startDate"
+                  onChange={e => setStartDate(e.target.value)}
+                  id="startDate"
+                />
               </label>
               <label htmlFor="endDate">
                 <span>DATA DE TÉRMINO</span>
-                <Input name="endDate" id="endDate" />
+                <Input readOnly name="endDate" id="endDate" />
               </label>
-              <label htmlFor="endPrice">
+              <label htmlFor="totalPrice">
                 <span>VALOR FINAL</span>
-                <Input name="endPrice" id="endPrice" />
+                <Input readOnly name="totalPrice" id="totalPrice" />
               </label>
             </Info>
           </Edit>

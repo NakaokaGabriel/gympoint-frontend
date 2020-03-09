@@ -1,35 +1,40 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
-import { priceMask } from '~/util/mask';
+import api from '~/services/api';
+import { priceFormatted } from '~/util/priceFormat';
 
 import Content from '~/components/Content';
-
 import { Header, Edit, Info } from './styles';
 
 export default function PlansEdit() {
-  const [duration, setDuration] = useState('');
-  const [monthPrice, setMonthPrice] = useState('');
-  const [totalPrice, setTotalPrice] = useState('');
+  const { plan_id } = useParams();
+
+  const [initialPlan, setInitialPlan] = useState([]);
 
   useEffect(() => {
-    function calcTotalPrice() {
-      const total = parseFloat(monthPrice);
-      const numberDuration = Number(duration);
+    async function loadPlan() {
+      const response = await api.get(`plans/${plan_id}`);
 
-      const totalDuration = total * numberDuration;
+      const data = {
+        ...response.data,
+        price: priceFormatted(response.data.price),
+        totalPrice: priceFormatted(
+          response.data.duration * response.data.price
+        ),
+      };
 
-      console.tron.log(total);
+      setInitialPlan(data);
     }
 
-    calcTotalPrice();
-  }, [duration, monthPrice]);
+    loadPlan();
+  }, [plan_id]);
 
   return (
     <>
-      <Form>
+      <Form initialData={initialPlan}>
         <Header>
           <h1>Edição de plano</h1>
           <aside>
@@ -45,6 +50,7 @@ export default function PlansEdit() {
         </Header>
         <Content>
           <Edit>
+            {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
             <label htmlFor="name">
               <span>TÍTULO DO PLANO</span>
               <Input placeholder="Diamond" name="title" id="title" />
@@ -52,31 +58,15 @@ export default function PlansEdit() {
             <Info>
               <label htmlFor="duration">
                 <span>DURAÇÃO (em meses)</span>
-                <Input
-                  onChange={event => setDuration(event.target.value)}
-                  name="duration"
-                  id="duration"
-                />
+                <Input name="duration" id="duration" />
               </label>
-              <label htmlFor="currentPrice">
+              <label htmlFor="price">
                 <span>PREÇO MENSAL</span>
-                <Input
-                  onChange={event =>
-                    setMonthPrice(priceMask(event.target.value))
-                  }
-                  value={monthPrice}
-                  name="currentPrice"
-                  id="currentPrice"
-                />
+                <Input name="price" id="price" />
               </label>
               <label htmlFor="totalPrice">
                 <span>PREÇO TOTAL</span>
-                <Input
-                  onChange={event => setTotalPrice(event.target.value)}
-                  value={totalPrice}
-                  name="totalPrice"
-                  id="totalPrice"
-                />
+                <Input name="totalPrice" readOnly id="totalPrice" />
               </label>
             </Info>
           </Edit>

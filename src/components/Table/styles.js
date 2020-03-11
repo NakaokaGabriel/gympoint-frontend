@@ -42,6 +42,13 @@ export const MainTable = styled.table`
           }
         }
       }
+
+      > button {
+        border: none;
+        background: none;
+        color: #4d85ee;
+        font-size: 16px;
+      }
     }
   }
 `;

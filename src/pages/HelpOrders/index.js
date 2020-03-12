@@ -12,6 +12,8 @@ import Modal from '~/components/Modal';
 export default function HelpOrders() {
   const [orders, setOrders] = useState([]);
 
+  const [modal, setModal] = useState(false);
+
   useEffect(() => {
     async function loadOrders() {
       const response = await api.get(`help-orders`);
@@ -39,14 +41,16 @@ export default function HelpOrders() {
               <tr key={order.id}>
                 <td>{order.student.name}</td>
                 <td className="ask-question">
-                  <button type="button">responder</button>
+                  <button type="button" onClick={() => setModal(true)}>
+                    responder
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </Content>
-      <Modal>
+      <Modal modal={modal}>
         <ModalContent>
           <h2>PERGUNTA DO ALUNO</h2>
           <p>

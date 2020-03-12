@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Background, Content } from './styles';
 
-export default function Modal({ children }) {
+export default function Modal({ children, modal }) {
   return (
-    <Background>
+    <Background modal={modal}>
       <Content>{children}</Content>
     </Background>
   );
@@ -13,4 +13,5 @@ export default function Modal({ children }) {
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
+  modal: PropTypes.bool.isRequired,
 };

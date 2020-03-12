@@ -48,7 +48,12 @@ export const MainTable = styled.table`
         background: none;
         color: #4d85ee;
         font-size: 16px;
+        text-align: right;
       }
+    }
+
+    .ask-question {
+      text-align: right;
     }
   }
 `;

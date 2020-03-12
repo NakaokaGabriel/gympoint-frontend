@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Background = styled.div`
+  visibility: ${props => (props.modal ? 'visible' : 'hidden')};
   background: rgba(0, 0, 0, 0.7);
   position: fixed;
   height: 100vh;

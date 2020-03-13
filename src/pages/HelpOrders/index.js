@@ -50,25 +50,28 @@ export default function HelpOrders() {
           </tbody>
         </Table>
       </Content>
-      <Modal modal={modal}>
-        <ModalContent>
-          <h2>PERGUNTA DO ALUNO</h2>
-          <p>
-            Olá pessoal da academia, gostaria de saber se quando acordar devo
-            ingerir batata doce e frango logo de primeira, preparar as marmitas
-            e lotar a geladeira? Dou um pico de insulina e jogo o hipercalórico?
-          </p>
-          <Form>
-            <label htmlFor="answer">SUA RESPOSTA</label>
-            <Textarea
-              id="answer"
-              name="answer"
-              placeholder="exemplo@email.com"
-            />
-            <button type="submit">Responder aluno</button>
-          </Form>
-        </ModalContent>
-      </Modal>
+      {modal && (
+        <Modal modal={modal} closeModal={() => setModal(false)}>
+          <ModalContent>
+            <h2>PERGUNTA DO ALUNO</h2>
+            <p>
+              Olá pessoal da academia, gostaria de saber se quando acordar devo
+              ingerir batata doce e frango logo de primeira, preparar as
+              marmitas e lotar a geladeira? Dou um pico de insulina e jogo o
+              hipercalórico?
+            </p>
+            <Form>
+              <label htmlFor="answer">SUA RESPOSTA</label>
+              <Textarea
+                id="answer"
+                name="answer"
+                placeholder="exemplo@email.com"
+              />
+              <button type="submit">Responder aluno</button>
+            </Form>
+          </ModalContent>
+        </Modal>
+      )}
     </>
   );
 }

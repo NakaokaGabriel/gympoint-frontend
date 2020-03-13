@@ -13,6 +13,8 @@ export default function HelpOrders() {
   const [orders, setOrders] = useState([]);
 
   const [modal, setModal] = useState(false);
+  const [studentOrder, setStudentOrder] = useState(Number());
+  const [helpOrder, setHelpOrder] = useState({});
 
   useEffect(() => {
     async function loadOrders() {
@@ -23,6 +25,21 @@ export default function HelpOrders() {
 
     loadOrders();
   }, []);
+
+  function handleModalOpen(student) {
+    setModal(true);
+    setStudentOrder(student);
+  }
+
+  useEffect(() => {
+    async function indexStudentOrder() {
+      const response = await api.get(`students/${studentOrder}/help-orders`);
+
+      setHelpOrder(response.data[2]);
+    }
+
+    indexStudentOrder();
+  }, [studentOrder]);
 
   return (
     <>
@@ -41,7 +58,10 @@ export default function HelpOrders() {
               <tr key={order.id}>
                 <td>{order.student.name}</td>
                 <td className="ask-question">
-                  <button type="button" onClick={() => setModal(true)}>
+                  <button
+                    type="button"
+                    onClick={() => handleModalOpen(order.student.id)}
+                  >
                     responder
                   </button>
                 </td>
@@ -54,12 +74,7 @@ export default function HelpOrders() {
         <Modal modal={modal} closeModal={() => setModal(false)}>
           <ModalContent>
             <h2>PERGUNTA DO ALUNO</h2>
-            <p>
-              Olá pessoal da academia, gostaria de saber se quando acordar devo
-              ingerir batata doce e frango logo de primeira, preparar as
-              marmitas e lotar a geladeira? Dou um pico de insulina e jogo o
-              hipercalórico?
-            </p>
+            <p>{helpOrder.question}</p>
             <Form>
               <label htmlFor="answer">SUA RESPOSTA</label>
               <Textarea

@@ -33,9 +33,9 @@ export default function HelpOrders() {
 
   useEffect(() => {
     async function indexStudentOrder() {
-      const response = await api.get(`students/${studentOrder}/help-orders`);
+      const response = await api.get(`help-orders/${studentOrder}`);
 
-      setHelpOrder(response.data[2]);
+      setHelpOrder(response.data);
     }
 
     indexStudentOrder();
@@ -60,7 +60,7 @@ export default function HelpOrders() {
                 <td className="ask-question">
                   <button
                     type="button"
-                    onClick={() => handleModalOpen(order.student.id)}
+                    onClick={() => handleModalOpen(order.id)}
                   >
                     responder
                   </button>

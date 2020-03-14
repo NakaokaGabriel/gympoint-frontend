@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { Container, Navbar, Profile } from './styles';
 
@@ -9,13 +9,28 @@ import logo from '~/assets/logo.svg';
 import { signOut } from '~/store/modules/auth/actions';
 
 export default function Header() {
+  const location = useLocation();
+
   const profile = useSelector(state => state.user.profile);
 
   const dispatch = useDispatch();
 
+  const [urlActive, setUrlActive] = useState('');
+
   function handleLogout() {
     dispatch(signOut());
   }
+
+  useLayoutEffect(() => {
+    function modifieldUrl() {
+      const pathUrl = location.pathname.split('/');
+      const [, url] = pathUrl;
+
+      setUrlActive(url);
+    }
+
+    modifieldUrl();
+  }, [location, urlActive]);
 
   return (
     <Container>
@@ -25,16 +40,35 @@ export default function Header() {
 
         <ul>
           <li>
-            <Link to="/students">ALUNOS</Link>
+            <Link
+              className={
+                urlActive === ('students' || 'student') ? 'active' : ''
+              }
+              to="/students"
+            >
+              ALUNOS
+            </Link>
           </li>
           <li>
-            <Link to="/plans">PLANOS</Link>
+            <Link className={urlActive === 'plans' ? 'active' : ''} to="/plans">
+              PLANOS
+            </Link>
           </li>
           <li>
-            <Link to="/enrollments">MATRÍCULAS</Link>
+            <Link
+              className={urlActive === 'enrollments' ? 'active' : ''}
+              to="/enrollments"
+            >
+              MATRÍCULAS
+            </Link>
           </li>
           <li>
-            <Link to="/help-orders">PEDIDOS DE AUXÍLIO</Link>
+            <Link
+              className={urlActive === 'help-orders' ? 'active' : ''}
+              to="/help-orders"
+            >
+              PEDIDOS DE AUXÍLIO
+            </Link>
           </li>
         </ul>
       </Navbar>

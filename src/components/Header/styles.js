@@ -38,6 +38,10 @@ export const Navbar = styled.nav`
       margin: 0 10px;
       color: #999999;
       font-weight: bold;
+
+      &.active {
+        color: #333;
+      }
     }
   }
 `;

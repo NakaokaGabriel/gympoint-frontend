@@ -42,7 +42,10 @@ export default function Header() {
           <li>
             <Link
               className={
-                urlActive === ('students' || 'student') ? 'active' : ''
+                urlActive ===
+                  (urlActive === 'students' ? 'students' : 'student')
+                  ? 'active'
+                  : ''
               }
               to="/students"
             >
@@ -50,13 +53,25 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link className={urlActive === 'plans' ? 'active' : ''} to="/plans">
+            <Link
+              className={
+                urlActive === (urlActive === 'plans' ? 'plans' : 'plan')
+                  ? 'active'
+                  : ''
+              }
+              to="/plans"
+            >
               PLANOS
             </Link>
           </li>
           <li>
             <Link
-              className={urlActive === 'enrollments' ? 'active' : ''}
+              className={
+                urlActive ===
+                  (urlActive === 'enrollments' ? 'enrollments' : 'enrollment')
+                  ? 'active'
+                  : ''
+              }
               to="/enrollments"
             >
               MATRÍCULAS

@@ -23,3 +23,23 @@ export function dateMask(value) {
 
   return value;
 }
+
+export function ageMask(value) {
+  value = value.replace(/\D/g, '');
+  value = value.replace(/(d{0-9})/g, '$1');
+
+  return value;
+}
+
+export function weightMask(value) {
+  value = value.replace(/\D/, '');
+  value = (value / 100).toFixed(2);
+  return value;
+}
+
+export function heightMask(value) {
+  value = value.replace(/\D/g, '');
+  value = value.replace(/(\d{1})(\d{2})/g, '$1.$2');
+
+  return value;
+}

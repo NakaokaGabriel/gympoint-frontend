@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
+import { ageMask, weightMask, heightMask } from '~/util/mask';
 
 import { studentRegisterRequest } from '~/store/modules/student/actions';
 
@@ -36,11 +37,9 @@ export default function StudentRegister() {
     dispatch(studentRegisterRequest(data));
 
     resetForm();
-
-    setUpdateAge('');
-    setUpdateWeight('');
-    setUpdateHeight('');
   }
+
+  console.tron.log(updateWeight);
 
   return (
     <>
@@ -77,7 +76,8 @@ export default function StudentRegister() {
                   name="age"
                   id="age"
                   value={updateAge}
-                  onChange={e => setUpdateAge(e.target.value)}
+                  onChange={e => setUpdateAge(ageMask(e.target.value))}
+                  maxLength="3"
                 />
               </label>
               <label htmlFor="weight">
@@ -86,7 +86,8 @@ export default function StudentRegister() {
                   name="weight"
                   id="weight"
                   value={updateWeight}
-                  onChange={e => setUpdateWeight(e.target.value)}
+                  onChange={e => setUpdateWeight(weightMask(e.target.value))}
+                  maxLength="6"
                 />
               </label>
               <label htmlFor="height">
@@ -94,8 +95,9 @@ export default function StudentRegister() {
                 <Input
                   name="height"
                   id="height"
-                  value={updateHeight}
+                  value={heightMask(updateHeight)}
                   onChange={e => setUpdateHeight(e.target.value)}
+                  maxLength="4"
                 />
               </label>
             </Info>

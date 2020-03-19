@@ -7,7 +7,7 @@ import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import api from '~/services/api';
 import { priceFormatted } from '~/util/priceFormat';
-import { dateMask } from '~/util/mask';
+// import { dateMask } from '~/util/mask';
 
 import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
@@ -79,6 +79,7 @@ export default function EnrollmentEdit() {
                   name="startDate"
                   onChange={e => setStartDate(e.target.value)}
                   id="startDate"
+                  value={startDate}
                 />
               </label>
               <label htmlFor="endDate">

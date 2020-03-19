@@ -37,8 +37,6 @@ export function* update({ payload }) {
     const weight = parseFloat(data.weight);
     const height = parseFloat(data.height);
 
-    console.tron.log(data);
-
     yield call(api.put, `students/${studentId}`, {
       ...data,
       age,

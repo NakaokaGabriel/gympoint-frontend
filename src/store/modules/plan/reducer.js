@@ -15,6 +15,14 @@ export default function plan(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@plan/UPDATE_PLAN_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@plan/UPDATE_PLAN_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
       case '@plan/PLAN_FAILURE': {
         draft.loading = false;
         break;

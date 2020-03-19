@@ -63,9 +63,13 @@ export default function EnrollmentRegister() {
     return priceFormatted(isMoney * isMonth || '0');
   }, [planValue]);
 
+  function handleSubmit(data) {
+    console.tron.log(data);
+  }
+
   return (
     <>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Header>
           <h1>Cadastro de matrícula</h1>
           <aside>

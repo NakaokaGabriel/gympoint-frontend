@@ -30,6 +30,24 @@ export function planDeleteSuccess() {
   };
 }
 
+export function planUpdateRequest(id, title, duration, price) {
+  return {
+    type: '@plan/UPDATE_PLAN_REQUEST',
+    payload: {
+      id,
+      title,
+      duration,
+      price,
+    },
+  };
+}
+
+export function planUpdateSuccess() {
+  return {
+    type: '@plan/UPDATE_PLAN_SUCCESS',
+  };
+}
+
 export function planFailure() {
   return {
     type: '@plan/PLAN_FAILURE',

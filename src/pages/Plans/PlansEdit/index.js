@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
@@ -6,11 +7,16 @@ import { Form, Input } from '@rocketseat/unform';
 import api from '~/services/api';
 import { priceFormatted } from '~/util/priceFormat';
 import { durationMask, priceMask } from '~/util/mask';
+import { planUpdateRequest } from '~/store/modules/plan/actions';
 
 import Content from '~/components/Content';
 import { Header, Edit, Info } from './styles';
 
 export default function PlansEdit() {
+  const dispatch = useDispatch();
+
+  const loading = useSelector(state => state.plan.loading);
+
   const { plan_id } = useParams();
 
   const [initialPlan, setInitialPlan] = useState([]);
@@ -39,9 +45,13 @@ export default function PlansEdit() {
     loadPlan();
   }, [plan_id]);
 
+  function handleSubmit({ title, duration, price }) {
+    dispatch(planUpdateRequest(plan_id, title, duration, price));
+  }
+
   return (
     <>
-      <Form initialData={initialPlan}>
+      <Form initialData={initialPlan} onSubmit={handleSubmit}>
         <Header>
           <h1>Edição de plano</h1>
           <aside>
@@ -51,14 +61,14 @@ export default function PlansEdit() {
             </Link>
             <button type="submit">
               <MdCheck color="#fff" size={20} />
-              SALVAR
+              {loading ? 'CARREGANDO' : 'SALVAR'}
             </button>
           </aside>
         </Header>
         <Content>
           <Edit>
             {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
-            <label htmlFor="name">
+            <label htmlFor="title">
               <span>TÍTULO DO PLANO</span>
               <Input placeholder="Diamond" name="title" id="title" />
             </label>

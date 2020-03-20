@@ -14,10 +14,9 @@ import Content from '~/components/Content';
 
 export default function EnrollmentRegister() {
   const [students, setStudents] = useState({});
-
+  const [studentValue, setStudentValue] = useState({});
   const [plans, setPlans] = useState([]);
   const [planValue, setPlanValue] = useState({});
-
   const [startDate, setStartDate] = useState('');
 
   useEffect(() => {
@@ -52,9 +51,7 @@ export default function EnrollmentRegister() {
     loadPlans();
   }, []);
 
-  const handleChange = e => {
-    setPlanValue(e);
-  };
+  console.tron.log(planValue.value);
 
   const finalPrice = useMemo(() => {
     const isMoney = parseFloat(planValue.price);
@@ -93,6 +90,7 @@ export default function EnrollmentRegister() {
                 options={students}
                 defaultValue={{ label: 'Escolha um aluno' }}
                 value={students.value}
+                onChange={e => setStudentValue(e)}
               />
             </label>
             <Info>
@@ -101,7 +99,7 @@ export default function EnrollmentRegister() {
                 <Select
                   options={plans}
                   defaultValue={{ label: 'Escolha um plano' }}
-                  onChange={handleChange}
+                  onChange={e => setPlanValue(e)}
                   name="plans"
                   value={plans.value}
                 />

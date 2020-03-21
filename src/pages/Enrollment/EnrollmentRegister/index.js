@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
@@ -8,11 +9,15 @@ import Select from 'react-select';
 import api from '~/services/api';
 import { priceFormatted } from '~/util/priceFormat';
 import { dateMask } from '~/util/mask';
+import { enrollmentRegisterRequest } from '~/store/modules/enrollment/actions';
 
 import { Header, Edit, Info } from './styles';
 import Content from '~/components/Content';
 
 export default function EnrollmentRegister() {
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.enrollment.loading);
+
   const [students, setStudents] = useState({});
   const [studentValue, setStudentValue] = useState({});
   const [plans, setPlans] = useState([]);
@@ -51,8 +56,6 @@ export default function EnrollmentRegister() {
     loadPlans();
   }, []);
 
-  console.tron.log(planValue.value);
-
   const finalPrice = useMemo(() => {
     const isMoney = parseFloat(planValue.price);
     const isMonth = Number(planValue.duration);
@@ -60,8 +63,8 @@ export default function EnrollmentRegister() {
     return priceFormatted(isMoney * isMonth || '0');
   }, [planValue]);
 
-  function handleSubmit(data) {
-    console.tron.log(data);
+  function handleSubmit({ startDate }) {
+    dispatch(enrollmentRegisterRequest(studentValue, planValue, startDate));
   }
 
   return (
@@ -76,7 +79,7 @@ export default function EnrollmentRegister() {
             </Link>
             <button type="submit">
               <MdCheck color="#fff" size={20} />
-              SALVAR
+              {loading ? 'CARREGANDO' : 'SALVAR'}
             </button>
           </aside>
         </Header>
@@ -90,7 +93,7 @@ export default function EnrollmentRegister() {
                 options={students}
                 defaultValue={{ label: 'Escolha um aluno' }}
                 value={students.value}
-                onChange={e => setStudentValue(e)}
+                onChange={e => setStudentValue(e.value)}
               />
             </label>
             <Info>
@@ -99,7 +102,7 @@ export default function EnrollmentRegister() {
                 <Select
                   options={plans}
                   defaultValue={{ label: 'Escolha um plano' }}
-                  onChange={e => setPlanValue(e)}
+                  onChange={e => setPlanValue(e.value)}
                   name="plans"
                   value={plans.value}
                 />

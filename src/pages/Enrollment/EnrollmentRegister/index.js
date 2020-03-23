@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import Select from 'react-select';
-import { addMonths, format, parseISO } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 
 import api from '~/services/api';
 import { priceFormatted } from '~/util/priceFormat';

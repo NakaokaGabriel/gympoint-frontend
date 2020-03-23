@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Form, Textarea } from '@rocketseat/unform';
+import { Form, Input } from '@rocketseat/unform';
 import api from '~/services/api';
 
 import { Header, ModalContent } from './styles';
@@ -18,9 +18,13 @@ export default function HelpOrders() {
 
   useEffect(() => {
     async function loadOrders() {
-      const response = await api.get(`help-orders`);
+      try {
+        const response = await api.get(`help-orders`);
 
-      setOrders(response.data);
+        setOrders(response.data);
+      } catch (err) {
+        console.tron.log(err);
+      }
     }
 
     loadOrders();
@@ -33,13 +37,19 @@ export default function HelpOrders() {
 
   useEffect(() => {
     async function indexStudentOrder() {
-      const response = await api.get(`help-orders/${studentOrder}`);
+      try {
+        const response = await api.get(
+          `help-orders/${studentOrder === 0 ? null : studentOrder}`
+        );
 
-      setHelpOrder(response.data);
+        setHelpOrder(response.data);
+      } catch (err) {
+        console.tron.log(err);
+      }
     }
 
     indexStudentOrder();
-  }, [studentOrder]);
+  }, [helpOrder, studentOrder]);
 
   return (
     <>
@@ -76,8 +86,10 @@ export default function HelpOrders() {
             <h2>PERGUNTA DO ALUNO</h2>
             <p>{helpOrder.question}</p>
             <Form>
+              {/* eslint-disable jsx-a11y/label-has-associated-control */}
               <label htmlFor="answer">SUA RESPOSTA</label>
-              <Textarea
+              <Input
+                multiline
                 id="answer"
                 name="answer"
                 placeholder="exemplo@email.com"

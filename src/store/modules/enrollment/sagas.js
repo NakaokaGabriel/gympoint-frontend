@@ -1,6 +1,7 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
 
 import api from '~/services/api';
+import history from '~/services/history';
 import {
   enrollmentRegisterSuccess,
   enrollmentFailure,
@@ -20,6 +21,8 @@ export function* enrollmentRegister({ payload }) {
     });
 
     yield put(enrollmentRegisterSuccess());
+
+    history.push('/enrollments');
   } catch (err) {
     yield put(enrollmentFailure());
   }

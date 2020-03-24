@@ -80,10 +80,14 @@ export const Edit = styled.div`
   input {
     margin-bottom: 8px;
     width: 100%;
-    padding: 13px 10px 13px 15px;
+    padding: 10px 10px 10px 15px;
     color: #666;
     border: 1px solid #ddd;
     border-radius: 4px;
+  }
+
+  input:read-only {
+    background: #f5f5f5;
   }
 `;
 

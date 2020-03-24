@@ -4,6 +4,7 @@ import api from '~/services/api';
 import history from '~/services/history';
 import {
   enrollmentRegisterSuccess,
+  enrollmentUpdateSuccess,
   enrollmentFailure,
 } from '~/store/modules/enrollment/actions';
 
@@ -28,6 +29,27 @@ export function* enrollmentRegister({ payload }) {
   }
 }
 
+export function* enrollmentUpdate({ payload }) {
+  try {
+    const { id, plan, start_date } = payload;
+
+    const [day, month, year] = start_date.split('/');
+    const date = new Date(`${year}, ${month}, ${day}`);
+
+    yield call(api.put, `enrollments/${id}`, {
+      start_date: date,
+      plan_id: plan,
+    });
+
+    yield put(enrollmentUpdateSuccess());
+
+    history.push('/enrollments');
+  } catch (err) {
+    yield put(enrollmentFailure());
+  }
+}
+
 export default all([
   takeLatest('@enrollment/ADD_ENROLLMENT_REQUEST', enrollmentRegister),
+  takeLatest('@enrollment/UPDATE_ENROLLMENT_REQUEST', enrollmentUpdate),
 ]);

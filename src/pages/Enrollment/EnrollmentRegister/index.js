@@ -91,7 +91,6 @@ export default function EnrollmentRegister() {
               {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
               <span>ALUNO</span>
               <Select
-                name="student"
                 options={students}
                 defaultValue={{ label: 'Escolha um aluno' }}
                 value={students.value}
@@ -102,7 +101,6 @@ export default function EnrollmentRegister() {
               <label htmlFor="plan">
                 <span>PLANO</span>
                 <Select
-                  name="plans"
                   options={plans}
                   defaultValue={{ label: 'Escolha um plano' }}
                   onChange={e => setPlanValue(e || '')}

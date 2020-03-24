@@ -15,6 +15,23 @@ export function enrollmentRegisterSuccess() {
   };
 }
 
+export function enrollmentUpdateRequest(id, selectPlan, start_date) {
+  return {
+    type: '@enrollment/UPDATE_ENROLLMENT_REQUEST',
+    payload: {
+      id,
+      selectPlan,
+      start_date,
+    },
+  };
+}
+
+export function enrollmentUpdateSuccess() {
+  return {
+    type: '@enrollment/UPDATE_ENROLLMENT_SUCCESS',
+  };
+}
+
 export function enrollmentFailure() {
   return {
     return: {

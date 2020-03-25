@@ -31,14 +31,14 @@ export function* enrollmentRegister({ payload }) {
 
 export function* enrollmentUpdate({ payload }) {
   try {
-    const { id, plan, start_date } = payload;
+    const { id, selectPlan, start_date } = payload;
 
     const [day, month, year] = start_date.split('/');
     const date = new Date(`${year}, ${month}, ${day}`);
 
     yield call(api.put, `enrollments/${id}`, {
       start_date: date,
-      plan_id: plan,
+      plan_id: selectPlan,
     });
 
     yield put(enrollmentUpdateSuccess());

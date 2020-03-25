@@ -110,12 +110,12 @@ export default function EnrollmentEdit() {
                   onChange={e => setSelectPlan(e.value)}
                 />
               </label>
-              <label htmlFor="startDate">
+              <label htmlFor="start_date">
                 <span>DATA DE INÍCIO</span>
                 <Input
                   name="start_date"
                   onChange={e => setStartDate(dateMask(e.target.value))}
-                  id="startDate"
+                  id="start_date"
                   value={startDate}
                   maxLength="10"
                 />

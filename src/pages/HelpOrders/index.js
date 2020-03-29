@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Form, Input } from '@rocketseat/unform';
 import api from '~/services/api';
+
+import { askHelpOrdersRequest } from '~/store/modules/help-orders/actions';
 
 import { Header, ModalContent } from './styles';
 import Content from '~/components/Content';
@@ -10,8 +13,11 @@ import Table from '~/components/Table';
 import Modal from '~/components/Modal';
 
 export default function HelpOrders() {
-  const [orders, setOrders] = useState([]);
+  const dispatch = useDispatch();
 
+  const loading = useSelector(state => state.helpOrders.loading);
+
+  const [orders, setOrders] = useState([]);
   const [modal, setModal] = useState(false);
   const [studentOrder, setStudentOrder] = useState(Number());
   const [helpOrder, setHelpOrder] = useState({});
@@ -49,7 +55,11 @@ export default function HelpOrders() {
     }
 
     indexStudentOrder();
-  }, [helpOrder, studentOrder]);
+  }, [studentOrder]);
+
+  function handleSubmit({ answer }) {
+    dispatch(askHelpOrdersRequest(studentOrder, answer));
+  }
 
   return (
     <>
@@ -85,7 +95,7 @@ export default function HelpOrders() {
           <ModalContent>
             <h2>PERGUNTA DO ALUNO</h2>
             <p>{helpOrder.question}</p>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               {/* eslint-disable jsx-a11y/label-has-associated-control */}
               <label htmlFor="answer">SUA RESPOSTA</label>
               <Input
@@ -94,7 +104,9 @@ export default function HelpOrders() {
                 name="answer"
                 placeholder="exemplo@email.com"
               />
-              <button type="submit">Responder aluno</button>
+              <button type="submit">
+                {loading ? 'CARREGANDO' : 'Responder aluno'}
+              </button>
             </Form>
           </ModalContent>
         </Modal>

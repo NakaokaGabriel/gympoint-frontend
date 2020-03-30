@@ -42,6 +42,20 @@ export default function Enrollment() {
     loadEnrollment();
   }, []);
 
+  async function handleDelete(id) {
+    const deleteEnrollment = enrollments.filter(enrollment => {
+      return enrollment.id !== id;
+    });
+
+    try {
+      await api.delete(`enrollments/${id}`);
+    } catch (err) {
+      console.tron.log(err);
+    }
+
+    setEnrollments(deleteEnrollment);
+  }
+
   return (
     <>
       <Header>
@@ -78,7 +92,12 @@ export default function Enrollment() {
                 <td>
                   <div>
                     <Link to={`enrollment/edit/${enrollment.id}`}>editar</Link>
-                    <button type="button">excluir</button>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(enrollment.id)}
+                    >
+                      excluir
+                    </button>
                   </div>
                 </td>
               </tr>

@@ -25,7 +25,7 @@ export default function HelpOrders() {
   useEffect(() => {
     async function loadOrders() {
       try {
-        const response = await api.get(`help-orders`);
+        const response = await api.get(`help-orders/unanswered`);
 
         setOrders(response.data);
       } catch (err) {

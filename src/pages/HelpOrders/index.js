@@ -16,6 +16,7 @@ export default function HelpOrders() {
   const dispatch = useDispatch();
 
   const loading = useSelector(state => state.helpOrders.loading);
+  const removeHelpOrder = useSelector(state => state.helpOrders.enrollment.id);
 
   const [orders, setOrders] = useState([]);
   const [modal, setModal] = useState(false);
@@ -28,13 +29,21 @@ export default function HelpOrders() {
         const response = await api.get(`help-orders/unanswered`);
 
         setOrders(response.data);
+
+        if (removeHelpOrder) {
+          const removeOrder = response.data.filter(orderFilter => {
+            return orderFilter.id !== orderFilter;
+          });
+
+          setOrders(removeOrder);
+        }
       } catch (err) {
         console.tron.log(err);
       }
     }
 
     loadOrders();
-  }, []);
+  }, [removeHelpOrder]);
 
   function handleModalOpen(student) {
     setModal(true);
@@ -59,6 +68,10 @@ export default function HelpOrders() {
 
   function handleSubmit({ answer }) {
     dispatch(askHelpOrdersRequest(studentOrder, answer));
+
+    if (!removeHelpOrder) {
+      setModal(false);
+    }
   }
 
   return (

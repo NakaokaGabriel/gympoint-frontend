@@ -1,5 +1,4 @@
 import produce from 'immer';
-import api from '~/services/api';
 
 const INITIAL_STATE = {
   loading: false,

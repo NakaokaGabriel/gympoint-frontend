@@ -12,48 +12,50 @@ export const MainTable = styled.table`
     }
   }
 
-  tbody tr {
-    &:first-child td {
-      border-top: none;
-      padding-top: 0;
-    }
-
-    td {
-      border-top: 1px solid #eee;
-      padding: 10px 0;
-
-      > p {
-        margin-left: 15px;
+  tbody {
+    tr {
+      &:first-child td {
+        border-top: none;
+        padding-top: 0;
       }
 
-      > div {
-        text-align: right;
+      td {
+        border-top: 1px solid #eee;
+        padding: 10px 0;
 
-        button,
-        a {
-          border: none;
-          background: transparent;
-          color: #4d85ee;
+        > p {
+          margin-left: 15px;
+        }
 
-          & + button {
-            margin-left: 20px;
-            font-size: 15px;
-            color: #de3b3b;
+        > div {
+          text-align: right;
+
+          button,
+          a {
+            border: none;
+            background: transparent;
+            color: #4d85ee;
+
+            & + button {
+              margin-left: 20px;
+              font-size: 15px;
+              color: #de3b3b;
+            }
           }
+        }
+
+        > button {
+          border: none;
+          background: none;
+          color: #4d85ee;
+          font-size: 16px;
+          text-align: right;
         }
       }
 
-      > button {
-        border: none;
-        background: none;
-        color: #4d85ee;
-        font-size: 16px;
+      .ask-question {
         text-align: right;
       }
-    }
-
-    .ask-question {
-      text-align: right;
     }
   }
 `;

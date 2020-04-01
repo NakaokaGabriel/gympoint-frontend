@@ -1,5 +1,6 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
+import history from '~/services/history';
 import api from '~/services/api';
 
 import {
@@ -24,6 +25,8 @@ export function* register({ payload }) {
     });
 
     yield put(studentRegisterSuccess());
+
+    history.push('/students');
   } catch (err) {
     yield put(studentFailure());
   }
@@ -45,6 +48,8 @@ export function* update({ payload }) {
     });
 
     yield put(studentUpdateSuccess());
+
+    history.push('/students');
   } catch (err) {
     yield put(studentFailure());
   }

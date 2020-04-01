@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,6 +7,7 @@ import { Form, Input } from '@rocketseat/unform';
 import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
 
 import api from '~/services/api';
+import { ageMask, weightMask, heightMask } from '~/util/mask';
 
 import { studentUpdateRequest } from '~/store/modules/student/actions';
 
@@ -14,8 +16,13 @@ import Content from '~/components/Content';
 
 export default function StudentEdit() {
   const dispatch = useDispatch();
+
   const loading = useSelector(state => state.student.loading);
+
   const [student, setStudent] = useState({});
+  const [updateAge, setUpdateAge] = useState('');
+  const [updateWeight, setUpdateWeight] = useState('');
+  const [updateHeight, setUpdateHeight] = useState('');
 
   const { id } = useParams();
 
@@ -29,9 +36,13 @@ export default function StudentEdit() {
         name,
         email,
         age,
-        weight: `${weight}kg`,
+        weight,
         height,
       });
+
+      setUpdateAge(age);
+      setUpdateWeight(weight);
+      setUpdateHeight(height);
     }
 
     loadStudent();
@@ -70,15 +81,33 @@ export default function StudentEdit() {
             <Info>
               <label htmlFor="age">
                 <span>IDADE</span>
-                <Input name="age" id="age" />
+                <Input
+                  name="age"
+                  onChange={e => setUpdateAge(ageMask(e.target.value))}
+                  value={updateAge}
+                  maxLength="3"
+                  id="age"
+                />
               </label>
               <label htmlFor="weight">
                 <span>PESO (em kg)</span>
-                <Input name="weight" id="weight" />
+                <Input
+                  name="weight"
+                  onChange={e => setUpdateWeight(weightMask(e.target.value))}
+                  value={updateWeight}
+                  maxLength="6"
+                  id="weight"
+                />
               </label>
               <label htmlFor="height">
                 <span>ALTURA</span>
-                <Input name="height" id="height" />
+                <Input
+                  name="height"
+                  id="height"
+                  value={updateHeight}
+                  onChange={e => setUpdateHeight(heightMask(e.target.value))}
+                  maxLength="4"
+                />
               </label>
             </Info>
           </Edit>

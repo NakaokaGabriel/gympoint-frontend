@@ -33,13 +33,9 @@ export default function StudentRegister() {
   const loading = useSelector(state => state.student.loading);
   const dispatch = useDispatch();
 
-  function handleSubmit(data, { resetForm }) {
+  function handleSubmit(data) {
     dispatch(studentRegisterRequest(data));
-
-    resetForm();
   }
-
-  console.tron.log(updateWeight);
 
   return (
     <>

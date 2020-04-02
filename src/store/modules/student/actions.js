@@ -23,7 +23,7 @@ export function studentUpdateRequest(data, studentId) {
   };
 }
 
-export function studentUpdateSuccess(profile) {
+export function studentUpdateSuccess() {
   return {
     type: '@student/UPDATE_SUCCESS',
   };
